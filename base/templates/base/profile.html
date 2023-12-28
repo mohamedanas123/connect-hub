@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}profile page{% endblock title %}
+
+{% block content %}
+
+<h1>my Posts</h1>
+
+{% if user.is_authenticated %}
+
+    {% for i in Post%}
+
+        {% if i.author.username == user.username  %}
+
+        <div class="card mt-2">
+            <div class="card-header"><strong>@{{i.author.username}}</strong></div>
+            <div class="card-body d-flex flex-row justify-content-between">
+        
+        
+                <div>
+                    <h5 class="card-title">{{i.title}}</h5>
+                    <p>{{i.des}}</p>
+                </div>
+                <form method="POST">
+                    {% csrf_token %}
+                    <button type='submit' class='btn btn-danger' value='{{i.id}}' name='post-id'>Delete</button>        
+        
+            </div>
+            <div class="card-footer text-muted">{{i.created}}</div>
+            
+        </div>
+      
+        {% endif %}
+
+    {% endfor %}
+
+{% endif %}
+
+
+{% endblock content %}
